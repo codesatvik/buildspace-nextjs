@@ -1,16 +1,48 @@
 import { defineRelations } from "drizzle-orm";
+import { achievements, userAchievements } from "./achievements";
 import { courses } from "./courses";
+import { enrollments } from "./enrollments";
 import { lessons } from "./lessons";
 import { progress } from "./progress";
 import { users } from "./users";
 
-export { courses, lessons, progress, users };
+export {
+  achievements,
+  courses,
+  enrollments,
+  lessons,
+  progress,
+  userAchievements,
+  users,
+};
 
 export const relations = defineRelations(
-  { courses, lessons, progress, users },
+  {
+    achievements,
+    courses,
+    enrollments,
+    lessons,
+    progress,
+    userAchievements,
+    users,
+  },
   (r) => ({
+    achievements: {
+      userAchievements: r.many.userAchievements(),
+    },
     courses: {
+      enrollments: r.many.enrollments(),
       lessons: r.many.lessons(),
+    },
+    enrollments: {
+      user: r.one.users({
+        from: r.enrollments.userId,
+        to: r.users.id,
+      }),
+      course: r.one.courses({
+        from: r.enrollments.courseId,
+        to: r.courses.id,
+      }),
     },
     lessons: {
       course: r.one.courses({
@@ -30,7 +62,19 @@ export const relations = defineRelations(
       }),
     },
     users: {
+      enrollments: r.many.enrollments(),
       progress: r.many.progress(),
+      userAchievements: r.many.userAchievements(),
+    },
+    userAchievements: {
+      user: r.one.users({
+        from: r.userAchievements.userId,
+        to: r.users.id,
+      }),
+      achievement: r.one.achievements({
+        from: r.userAchievements.achievementId,
+        to: r.achievements.id,
+      }),
     },
   }),
 );
