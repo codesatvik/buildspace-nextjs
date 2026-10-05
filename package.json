@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "fetch:youtube" :"tsx db/fetch_youtube_video.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.8.0",
@@ -18,6 +19,7 @@
     "dotenv": "^18.0.5",
     "drizzle-orm": "^1.0.0-rc.4",
     "framer-motion": "^13.4.0",
+    "googleapis": "^183.0.0",
     "lucide-react": "^1.47.0",
     "next": "16.3.5",
     "pg": "^8.23.1",
