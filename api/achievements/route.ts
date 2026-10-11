@@ -11,7 +11,9 @@ export async function GET() {
             return new NextResponse("unauthorized", { status: 401 })
         }
         let dbUser = await db.query.users.findFirst({
-            where: users.clerkId.userId
+            where: {
+                clerkId: userId
+            }
 
         });
         if (!dbUser) {
@@ -19,7 +21,10 @@ export async function GET() {
         }
         const allAchievements = await db.query.achievements.findMany();
         const userAchievementsList = await db.query.userAchievements.findMany({
-            where: eq(userAchievements.userId, dbUser.id)
+            where: {
+                userId: dbUser.id
+            }
+            //where: eq(userAchievements.userId, dbUser.id)
         })
         const earnedAchievementsIds = new Set(
             userAchievementsList.map((ua) => ua.achievementId),
