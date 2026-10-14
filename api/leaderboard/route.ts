@@ -1,6 +1,6 @@
 import { db } from "@/db/drizzle";
-import { users } from "@/db/schema";
 import { auth } from "@clerk/nextjs/server";
+import { desc } from "drizzle-orm";
 import { NextResponse } from "next/server";
 
 export async function GET() { 
@@ -22,17 +22,18 @@ export async function GET() {
                 level: true,
                 currentStreak: true,
             },
-            orderBy: [desc(users.points)],
+            orderBy: (users, { desc }) => desc(users.points),
         })
-        const entriesWithRank = leaderboardEntries.map((entry, index) => ({ 
-            rank: index + 1
+        const entriesWithRank = leaderboardEntireis.map((entry: typeof leaderboardEntireis[number], index: number) => ({
+            ...entry,
+            rank: index + 1,
         }))
         let userRank = null;
         let userPoints = 0;
         let userLevel = 1;
         let userStreak = 0;
         if (currentUser) { 
-            userRank = entriesWithRank.findIndex((e) => e.id === currentUser.id) + 1;
+            userRank = entriesWithRank.findIndex((e: typeof entriesWithRank[number]) => e.id === currentUser.id) + 1;
             userPoints = currentUser.points;
             userLevel = currentUser.level;
             userStreak =  currentUser.currentStreak; 
@@ -42,7 +43,7 @@ export async function GET() {
             userRank,
             userPoints,
             userLevel,
-            userStreak
+            userStreak,
             totalUsers: leaderboardEntireis.length,
         });
 
