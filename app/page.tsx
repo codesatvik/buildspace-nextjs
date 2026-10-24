@@ -1,15 +1,12 @@
 
-import { SignOutButton } from "@clerk/nextjs";
 
-export default function Home() {
+export default function LandingPage() {
   return (
     <div>
-      buildspace
-      <SignOutButton redirectUrl="/sign-in" >
-         <button className="rounded bg-red-500 px-4 py-3 text-white">
-         SignOut
-         </button>
-      </SignOutButton>
+     
+      <div className="min-h-screen bg-linear-to-br from-purple-50 via-white to-indigo-50 overflow-hidden">
+        
+      </div>
       
     </div>
   );
