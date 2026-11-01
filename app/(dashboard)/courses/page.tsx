@@ -6,6 +6,7 @@ import { useState } from "react";
 import { Search } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import { CourseCard } from "@/components/common/course_card";
 
 export default function CoursesPage() {
   const [search, setSearch] = useState("");
@@ -39,7 +40,6 @@ export default function CoursesPage() {
         </p>
       </div>
 
-      {/* Search Bar Only - No Filter Button */}
       <div className="relative max-w-md">
         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 h-4 w-4" />
         <Input
@@ -92,7 +92,7 @@ export default function CoursesPage() {
           </p>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {filteredCourses.map((course: any) => (
-              <div key={course.id} {...course} />
+              <CourseCard key={course.id} {...course} />
             ))}
           </div>
         </>
