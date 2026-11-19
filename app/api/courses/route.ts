@@ -1,7 +1,5 @@
 import { db } from "@/db/drizzle";
-import { enrollments, users } from "@/db/schema";
 import { auth } from "@clerk/nextjs/server";
-import { eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
 
 export async function GET() {
@@ -40,7 +38,11 @@ export async function GET() {
       progress: 0,
     }));
     return NextResponse.json(formattedCourses);
-  } catch (e) {
-    return e;
+  } catch (error) {
+    console.error("[courses_get]", error);
+    return NextResponse.json(
+      { error: "failed to load courses" },
+      { status: 500 },
+    );
   }
 }
